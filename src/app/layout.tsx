@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
+import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,8 @@ export default function RootLayout({
           <Header></Header>
           <div className="flex min-h-screen">
             {/* Sidebar */}
+            <Sidebar></Sidebar>
+
             <div className="flex-1 p-4 bg-gray-100 overflow-y-auto">
               {children}
             </div>
