@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Button } from "./ui/button";
+import { createNewDocument } from "../../actions/actions";
 
 type Props = {};
 const NewDocumentBtton = (props: Props) => {
@@ -14,7 +15,7 @@ const NewDocumentBtton = (props: Props) => {
     })
   };
 
-  return <Button onClick={handleCreateNewDocument} disabled={!isPending}>
+  return <Button onClick={handleCreateNewDocument} disabled={isPending}>
     {isPending ? "Creating..." : "New Document"}
   </Button>;
 };
