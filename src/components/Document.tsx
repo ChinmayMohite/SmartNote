@@ -10,7 +10,7 @@ const Document = ({ id }: { id: string }) => {
   const [data, loading, error] = useDocumentData(doc(db, "documents", id));
   const [input, setInput] = useState("");
   const [isUpdating, startTransition] = useTransition();
-  const isOwner =  useOwner();
+  // const isOwner =  useOwner();
   useEffect(() => {
     if(data){
       setInput(data.title);
@@ -46,6 +46,7 @@ const Document = ({ id }: { id: string }) => {
         {/* Manage Users  */}
         {/* Avatars */}
       </div>
+      <hr className="pb-10"></hr>
       {/* Collaborative Editor */}
     </div>
   );

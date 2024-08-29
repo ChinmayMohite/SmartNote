@@ -13,11 +13,9 @@ const RoomProvider = ({
   children: React.ReactNode;
 }) => {
   return (
-    <RoomProviderWrapper id={roomId} initialPresence={{ cursor: null }}>
+    <RoomProviderWrapper id={roomId} initialPresence={{ cursor: null, }}>
       <ClientSideSuspense fallback={<LoadingSpinner></LoadingSpinner>}>
-        <LiveCursorProvider>
-        {children}
-          </LiveCursorProvider>      
+        <LiveCursorProvider>{children}</LiveCursorProvider>
       </ClientSideSuspense>
     </RoomProviderWrapper>
   );
