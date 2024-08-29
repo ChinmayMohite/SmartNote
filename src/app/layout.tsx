@@ -4,6 +4,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,16 +21,25 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body>
-          <Header></Header>
-          <div className="flex min-h-screen">
-            {/* Sidebar */}
-            <Sidebar></Sidebar>
+        <body
+          className={`${inter.className} bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}
+        >
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header></Header>
+            <div className="flex min-h-screen">
+              {/* Sidebar */}
+              <Sidebar></Sidebar>
 
-            <div className="flex-1 p-4 bg-gray-100 overflow-y-auto">
-              {children}
+              <div className="flex-1 p-4 bg-gray-100 dark:bg-gray-800 overflow-y-auto">
+                {children}
+              </div>
             </div>
-          </div>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

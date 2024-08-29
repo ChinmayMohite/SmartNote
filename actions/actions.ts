@@ -2,7 +2,6 @@
 
 import { auth } from "@clerk/nextjs/server";
 import { adminDb } from "../firebase-admin";
-import { title } from "process";
 
 export async function createNewDocument() {
   // Implement logic to create a new document
