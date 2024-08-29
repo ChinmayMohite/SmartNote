@@ -116,7 +116,7 @@ const Sidebar = (props: Props) => {
   );
 
   return (
-    <div className="p-2 md:p-5 bg-gray-200 dark:bg-gray-800 relative">
+    <div className="p-2 md:p-5 bg-gray-200 dark:bg-gray-900 relative dark:border-r-2 border-gray-700 ">
       <div className="md:hidden">
         <Sheet>
           <SheetTrigger>

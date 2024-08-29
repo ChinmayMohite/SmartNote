@@ -15,7 +15,7 @@ function SidebarOptions({ href, id }: { href: string; id: string }) {
   return (
     <Link
       href={href}
-      className={`border p-2 rounded-md ${
+      className={`border p-2 rounded-lg ${
         isActive
           ? "bg-gray-300 dark:bg-gray-700 font-bold border-black dark:border-white"
           : "border-gray-400 dark:border-gray-600"

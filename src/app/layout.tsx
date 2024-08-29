@@ -35,7 +35,7 @@ export default function RootLayout({
               {/* Sidebar */}
               <Sidebar></Sidebar>
 
-              <div className="flex-1 p-4 bg-gray-100 dark:bg-gray-800 overflow-y-auto">
+              <div className="flex-1 p-4 bg-gray-100 dark:bg-black overflow-y-auto">
                 {children}
               </div>
             </div>
