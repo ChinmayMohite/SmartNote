@@ -9,6 +9,7 @@ import { useDocumentData } from "react-firebase-hooks/firestore";
 import Editor from "./Editor";
 import { useTheme } from "next-themes";
 import useOwner from "@/lib/useOwner";
+import DeleteDocument from "./DeleteDocument";
 
 const Document = ({ id }: { id: string }) => {
   const { theme } = useTheme(); // Get the current theme
@@ -34,6 +35,7 @@ const Document = ({ id }: { id: string }) => {
       });
     }
   };
+  console.log(isOwner)
 
   return (
     <div
@@ -52,16 +54,21 @@ const Document = ({ id }: { id: string }) => {
           <Button disabled={isUpdating} type="submit">
             {isUpdating ? "Updating..." : "Update"}
           </Button>
-          {/* if owner and Invite User , Delete */}
+            {isOwner && (
+              <>
+
+                <p className="text-white">I am the owner</p>
+                <DeleteDocument></DeleteDocument>
+              </>
+            )}
+
         </form>
       </div>
       <div>
         {/* Manage Users */}
         {/* Avatars */}
       </div>
-      <hr
-        className={`pb-10 ${theme === "dark" ? "border-gray-700" : ""}`}
-      ></hr>
+      <hr className={`pb-10 ${theme === "dark" ? "border-gray-700" : ""}`}></hr>
       {/* Collaborative Editor */}
       <Editor theme={theme!} />
     </div>
