@@ -12,6 +12,7 @@ import useOwner from "@/lib/useOwner";
 import DeleteDocument from "./DeleteDocument";
 import InviteUser from "./IniviteUser";
 import ManageUsers from "./ManageUsers";
+import Avatars from "./Avatars";
 
 const Document = ({ id }: { id: string }) => {
   const { theme } = useTheme(); // Get the current theme
@@ -67,9 +68,10 @@ const Document = ({ id }: { id: string }) => {
         </form>
       </div>
       <div className="max-w-6xl flex mx-auto justify-between items-center mb-5">
-            <ManageUsers></ManageUsers>
         {/* Manage Users */}
+            <ManageUsers></ManageUsers>
         {/* Avatars */}
+            <Avatars></Avatars>
       </div>
       <hr className={`pb-10 ${theme === "dark" ? "border-gray-700" : ""}`}></hr>
       {/* Collaborative Editor */}

@@ -3,64 +3,87 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { FormEvent, useState, useTransition } from "react";
 import { Button } from "./ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
-import { usePathname, useRouter } from "next/navigation";
-import { inviteUserToDocument } from "../../actions/actions";
+import { inviteUserToDocument, removeUserFromDocument } from "../../actions/actions";
 import { toast } from "sonner";
-import { Input } from "./ui/input";
+import { useUser } from "@clerk/nextjs";
+import useOwner from "@/lib/useOwner";
+import { useRoom } from "@liveblocks/react/suspense";
+import { useCollection } from "react-firebase-hooks/firestore";
+import { collectionGroup, query, where } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const InviteUser = () => {
+  const { user } = useUser();
+  const isOwner = useOwner();
+  const room = useRoom();
   const [isOpen, setIsOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const path = usePathname();
-  const router = useRouter();
-  const handleInvite = async (e: FormEvent) => {
-    e.preventDefault();
-    const roomId = path.split("/").pop();
-    if (!roomId) return;
+  const [isPending, startTransition] = useTransition();
+
+  const [usersInRoom] = useCollection(
+    user && query(collectionGroup(db, "rooms"), where("roomId", "==", room.id))
+  );
+  const handleDelete = async (userId: string) => {
     startTransition(async () => {
-      const { success } = await inviteUserToDocument(roomId, email);
+      if(!user) return;
+      const { success } = await removeUserFromDocument(room.id,userId);
       if (success) {
         setIsOpen(false);
-        setEmail("");
         toast.success("User Added Successfully");
       } else {
         toast.error("Failed to add user");
       }
     });
   };
-  const [isPending, startTransition] = useTransition();
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <Button asChild variant={"outline"}>
-        <DialogTrigger>Invite</DialogTrigger>
+        <DialogTrigger>Users ({usersInRoom?.docs.length})</DialogTrigger>
       </Button>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Invite a User to Collaborate!</DialogTitle>
+          <DialogTitle>Users with Access</DialogTitle>
           <DialogDescription>
-            Enter the email address of the user to invite.
+            Below is the list of users with access to the document.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleInvite} className="flex gap-2">
-          <Input
-            type="email"
-            placeholder="Email"
-            className="w-full"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Input>
-          <Button type="submit" disabled={!email || isPending}>
-            {isPending ? "Inviting..." : "Invite"}
-          </Button>
-        </form>
+        <hr className="my-2"></hr>
+        <div className="flex flex-col space-y-2">
+          {usersInRoom?.docs.map((doc) => (
+            <div
+              key={doc.data().userId}
+              className="flex justify-between items-center"
+            >
+              <p className="font-light">
+                {doc.data().userId === user?.emailAddresses[0].toString()
+                  ? `You (${doc.data().userId})`
+                  : doc.data().userId}
+              </p>
+              <div className="flex items-center gap-2">
+              {doc.data().role === "owner" ? <Button className="bg-green-400">{doc.data().role}</Button> : <Button className="bg-blue-400">{doc.data().role}</Button>}
+                
+                {isOwner &&
+                  doc.data().userId !== user?.emailAddresses[0].toString() && (
+                    <Button
+                      variant={"destructive"}
+                      size="sm"
+                      disabled={isPending}
+                      onClick={() => {
+                        handleDelete(doc.data().userId);
+                      }}
+                    >
+                      {isPending ? "Removing..." : "Delete"}
+                    </Button>
+                  )}
+              </div>
+            </div>
+          ))}
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -64,8 +64,24 @@ export async function inviteUserToDocument(roomId: string, email: string) {
         createdAt: new Date(),
         roomId,
       });
-      return { success: true };
-      
+    return { success: true };
+  } catch (error) {
+    console.log(error);
+    return { success: false };
+  }
+}
+
+export async function removeUserFromDocument(roomId: string, email: string) {
+  auth().protect();
+  console.log(`removeUserFromDocument`, roomId);
+  try {
+    await adminDb
+      .collection("users")
+      .doc(email)
+      .collection("rooms")
+      .doc(roomId)
+      .delete();
+    return { success: true };
   } catch (error) {
     console.log(error);
     return { success: false };
