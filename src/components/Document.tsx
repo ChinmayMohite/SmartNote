@@ -10,6 +10,8 @@ import Editor from "./Editor";
 import { useTheme } from "next-themes";
 import useOwner from "@/lib/useOwner";
 import DeleteDocument from "./DeleteDocument";
+import InviteUser from "./IniviteUser";
+import ManageUsers from "./ManageUsers";
 
 const Document = ({ id }: { id: string }) => {
   const { theme } = useTheme(); // Get the current theme
@@ -57,14 +59,15 @@ const Document = ({ id }: { id: string }) => {
             {isOwner && (
               <>
 
-                <p className="text-white">I am the owner</p>
+                <InviteUser></InviteUser>
                 <DeleteDocument></DeleteDocument>
               </>
             )}
 
         </form>
       </div>
-      <div>
+      <div className="max-w-6xl flex mx-auto justify-between items-center mb-5">
+            <ManageUsers></ManageUsers>
         {/* Manage Users */}
         {/* Avatars */}
       </div>

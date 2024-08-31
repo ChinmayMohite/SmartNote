@@ -97,7 +97,6 @@ const Sidebar = (props: Props) => {
             ))}
           </>
         )}
-      </div>
       {groupedData.editor.length > 0 && (
         <>
           <h2 className="text-gray-500 dark:text-gray-400 font-semibold text-sm">
@@ -105,13 +104,14 @@ const Sidebar = (props: Props) => {
           </h2>
           {groupedData.editor.map((doc) => (
             <SidebarOptions
-              key={doc.id}
-              id={doc.id}
-              href={`/doc/${doc.id}`}
+            key={doc.id}
+            id={doc.id}
+            href={`/doc/${doc.id}`}
             ></SidebarOptions>
           ))}
         </>
       )}
+      </div>
     </>
   );
 
