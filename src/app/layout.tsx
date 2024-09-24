@@ -10,8 +10,8 @@ import { Toaster } from "@/components/ui/sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Notion",
-  description: "Notion Clone app",
+  title: "SmartNote",
+  description: "Smart Note Taking app",
 };
 
 export default function RootLayout({
