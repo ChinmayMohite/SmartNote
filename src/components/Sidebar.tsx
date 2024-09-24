@@ -72,7 +72,7 @@ const Sidebar = (props: Props) => {
       }
     );
     setGroupedData(grouped);
-    console.log(grouped);
+    // console.log(grouped);
   }, [data]);
 
   const menuOptions = (

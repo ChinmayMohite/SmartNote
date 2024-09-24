@@ -9,6 +9,7 @@ import { useCreateBlockNote } from "@blocknote/react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/shadcn/style.css";
 import stringToColor from "@/lib/stringToColor";
+import TranslateDocument from "./TranslateDocument";
 
 type EditorProps = {
   doc: Y.Doc;
@@ -43,10 +44,12 @@ function BlockNote({ doc, provider, theme }: EditorProps) {
 const Editor = ({ theme }: { theme: string }) => {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
+  console.log(doc);
   const [provider, setProvider] = useState<LiveblocksYjsProvider>();
 
   useEffect(() => {
     const yDoc = new Y.Doc();
+    console.log(yDoc + "");
     const yProvider = new LiveblocksYjsProvider(room, yDoc);
     setDoc(yDoc);
     setProvider(yProvider);
@@ -60,9 +63,14 @@ const Editor = ({ theme }: { theme: string }) => {
   if (!doc || !provider) {
     return null;
   }
-
+  console.log(doc.get("document-store").toJSON());
   return (
-    <BlockNote doc={doc} provider={provider} theme={theme} />
+    <div className="max-w-6xl mx-auto">
+      <div className="flex items-center gap-2 justify-end mb-10">
+        {/* <TranslateDocument doc={doc}></TranslateDocument> */}
+      </div>
+      <BlockNote doc={doc} provider={provider} theme={theme} />
+    </div>
   );
 };
 

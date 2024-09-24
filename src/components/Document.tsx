@@ -38,7 +38,7 @@ const Document = ({ id }: { id: string }) => {
       });
     }
   };
-  console.log(isOwner)
+  // console.log(isOwner)
 
   return (
     <div
@@ -59,7 +59,6 @@ const Document = ({ id }: { id: string }) => {
           </Button>
             {isOwner && (
               <>
-
                 <InviteUser></InviteUser>
                 <DeleteDocument></DeleteDocument>
               </>
@@ -69,6 +68,7 @@ const Document = ({ id }: { id: string }) => {
       </div>
       <div className="max-w-6xl flex mx-auto justify-between items-center mb-5">
         {/* Manage Users */}
+        
             <ManageUsers></ManageUsers>
         {/* Avatars */}
             <Avatars></Avatars>

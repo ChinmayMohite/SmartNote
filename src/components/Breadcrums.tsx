@@ -12,7 +12,7 @@ import { Fragment } from "react";
 
 function Breadcrums() {
   const path = usePathname();
-  console.log(path)
+  // console.log(path)
   const segments = path.split("/").filter(Boolean);
 
   return (
